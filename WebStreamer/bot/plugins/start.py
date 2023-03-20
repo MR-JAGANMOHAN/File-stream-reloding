@@ -10,6 +10,8 @@ from pyrogram.types import ReplyKeyboardMarkup
 from WebStreamer.vars import Var 
 from WebStreamer.bot import StreamBot
 
+from subprocess import run as srun
+
 @StreamBot.on_message(filters.command("start") & filters.private)
 async def start(b, m: Message):
     if Var.UPDATES_CHANNEL != "None":
@@ -55,3 +57,33 @@ async def start(b, m: Message):
             ]
         )
     )
+@StreamBot.on_message(filters.command("restart") & filters.private)
+async def restart(b, m: Message):
+    if str(m.chat.id) == "5175000602":
+        try:
+            await b.send_message(
+                chat_id=m.chat.id,
+                text="Restarting...",
+
+                disable_web_page_preview=True)
+            srun(["python3","-m","WebStreamer"])
+            await b.send_message(
+                chat_id=m.chat.id,
+                text="Restarted",
+
+                disable_web_page_preview=True)
+            return
+        except Exception:
+            await b.send_message(
+                chat_id=m.chat.id,
+                text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
+
+                disable_web_page_preview=True)
+            return
+    else:
+        await b.send_message(
+            chat_id=m.chat.id,
+            text="This Command Is Only For Owner",
+            
+            disable_web_page_preview=True)
+        return
