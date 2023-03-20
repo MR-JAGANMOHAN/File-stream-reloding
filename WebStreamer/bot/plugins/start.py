@@ -10,6 +10,8 @@ from pyrogram.types import ReplyKeyboardMarkup
 from WebStreamer.vars import Var 
 from WebStreamer.bot import StreamBot
 
+from aiohttp import web
+from WebStreamer.server import web_server
 from subprocess import run as srun
 
 @StreamBot.on_message(filters.command("start") & filters.private)
