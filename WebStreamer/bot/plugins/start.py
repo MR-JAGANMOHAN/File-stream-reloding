@@ -10,8 +10,7 @@ from pyrogram.types import ReplyKeyboardMarkup
 from WebStreamer.vars import Var 
 from WebStreamer.bot import StreamBot
 
-from aiohttp import web
-from WebStreamer.server import web_server
+from WebStreamer.__main__ import *
 from subprocess import run as srun
 
 @StreamBot.on_message(filters.command("start") & filters.private)
@@ -68,7 +67,8 @@ async def restart(b, m: Message):
                 text="Restarting...",
 
                 disable_web_page_preview=True)
-            await web.TCPSite(server, Var.BIND_ADDRESS, Var.PORT).stop()
+            loop.run_until_complete(cleanup())
+            loop.stop()
             srun(["python3","-m","WebStreamer"])
             await b.send_message(
                 chat_id=m.chat.id,
@@ -99,7 +99,9 @@ async def restart(b, m: Message):
                 text="Stoped",
 
                 disable_web_page_preview=True)
-            await StreamBot.stop()
+            loop.run_until_complete(cleanup())
+            loop.stop()
+            logging.info("Stopped Services")
             return
         except Exception:
             await b.send_message(
