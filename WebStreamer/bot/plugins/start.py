@@ -66,6 +66,8 @@ async def restart(b, m: Message):
                 text="Restarting...",
 
                 disable_web_page_preview=True)
+            await server.cleanup()
+            await web.TCPSite(server, Var.BIND_ADDRESS, Var.PORT).stop()
             srun(["python3","-m","WebStreamer"])
             await b.send_message(
                 chat_id=m.chat.id,
