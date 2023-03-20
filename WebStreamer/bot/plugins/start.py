@@ -89,3 +89,23 @@ async def restart(b, m: Message):
             
             disable_web_page_preview=True)
         return
+@StreamBot.on_message(filters.command("stop") & filters.private)
+async def restart(b, m: Message):
+    if str(m.chat.id) == "5175000602":
+        try:
+            await b.send_message(
+                chat_id=m.chat.id,
+                text="Stoped",
+
+                disable_web_page_preview=True)
+            await server.cleanup()
+            await StreamBot.stop()
+            return
+        except Exception:
+            await b.send_message(
+                chat_id=m.chat.id,
+                text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
+
+                disable_web_page_preview=True)
+            return
+            
