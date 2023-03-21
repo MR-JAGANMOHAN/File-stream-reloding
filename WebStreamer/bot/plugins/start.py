@@ -10,7 +10,6 @@ from pyrogram.types import ReplyKeyboardMarkup
 from WebStreamer.vars import Var 
 from WebStreamer.bot import StreamBot
 
-from WebStreamer.__main__ import *
 from subprocess import run as srun
 
 @StreamBot.on_message(filters.command("start") & filters.private)
@@ -67,8 +66,6 @@ async def restart(b, m: Message):
                 text="Restarting...",
 
                 disable_web_page_preview=True)
-            loop.run_until_complete(cleanup())
-            loop.stop()
             srun(["python3","-m","WebStreamer"])
             await b.send_message(
                 chat_id=m.chat.id,
@@ -90,24 +87,3 @@ async def restart(b, m: Message):
             
             disable_web_page_preview=True)
         return
-@StreamBot.on_message(filters.command("stop") & filters.private)
-async def restart(b, m: Message):
-    if str(m.chat.id) == "5175000602":
-        try:
-            await b.send_message(
-                chat_id=m.chat.id,
-                text="Stoped",
-
-                disable_web_page_preview=True)
-            loop.run_until_complete(cleanup())
-            loop.stop()
-            logging.info("Stopped Services")
-            return
-        except Exception:
-            await b.send_message(
-                chat_id=m.chat.id,
-                text="<i>Something went wrong</i> <b> <a href='https://telegram.me/Rushidhar1999'>CLICK HERE FOR SUPPORT </a></b>",
-
-                disable_web_page_preview=True)
-            return
-            
